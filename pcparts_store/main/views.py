@@ -8,7 +8,7 @@ from pcparts_store.main.models import Item, OrderItem
 class ItemListView(views.ListView):
     model = Item
     context_object_name = 'items'
-    paginate_by = 10
+    paginate_by = 8
     template_name = 'main/home-page.html'
 
 
