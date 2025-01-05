@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 # Create your models here.
 
@@ -23,6 +24,10 @@ class Item(models.Model):
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default=CATEGORY_CHOICES[0][0])
     label = models.CharField(choices=LABEL_CHOICES, max_length=2, default=LABEL_CHOICES[0][0])
     image = models.ImageField(upload_to='media/', null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+
+    def get_add_to_cart_url(self):
+        return reverse('add-to-cart', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
@@ -30,9 +35,12 @@ class Item(models.Model):
 
 class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.item
+        return f"{self.quantity} of {self.item.title}"
 
 
 class Order(models.Model):
