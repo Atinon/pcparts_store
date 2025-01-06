@@ -18,6 +18,7 @@ LABEL_CHOICES = (
     ('DR', 'danger'),
 )
 
+
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
@@ -29,6 +30,14 @@ class Item(models.Model):
     def get_add_to_cart_url(self):
         return reverse('add-to-cart', kwargs={'pk': self.pk})
 
+    def get_label_text(self):
+        if self.label == 'PR':
+            return 'NEW'
+        elif self.label == 'DR':
+            return 'SALE'
+        else:
+            return ''
+
     def __str__(self):
         return self.title
 
@@ -38,6 +47,9 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     ordered = models.BooleanField(default=False)
+
+    def get_total_price(self):
+        return self.quantity * self.item.price
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
@@ -49,6 +61,12 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+
+    def get_total_price(self):
+        price = 0
+        for item in self.items.all():
+            price += item.get_total_price()
+        return price
 
     def __str__(self):
         return str(self.user)

@@ -3,7 +3,7 @@
 {% block content %}
 
     <!--Main layout-->
-    <main class="mt-5 pt-4">
+    <main class="mt-0 pt-0">
         <div class="container">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark mt-3 mb-5 shadow p-2" style="background-color: #607D8B">
@@ -73,7 +73,7 @@
                                             <div class="mask">
                                                 <div class="d-flex justify-content-start align-items-end h-100">
                                                     <h5><span
-                                                            class="badge bg-{{ item.get_label_display }} ms-2">ASD</span>
+                                                            class="badge bg-{{ item.get_label_display }} ms-2">{{ item.get_label_text }}</span>
                                                     </h5>
                                                 </div>
                                             </div>

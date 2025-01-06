@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views import generic as views
@@ -24,7 +25,18 @@ class ItemDetailsView(views.DetailView):
     template_name = 'main/product-page.html'
 
 
+class CartView(views.View):
+    def get(self, request):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            return render(self.request, 'main/cart-page.html', {'order': order})
+        except ObjectDoesNotExist:
+            messages.error(self.request, 'Order does not exist')
+            return redirect('home-page')
+
+
 def add_to_cart(request, pk):
+    redirect_url = request.GET.get('redirect_url', 'product-page')
     item = get_object_or_404(Item, pk=pk)
     order_item, created = OrderItem.objects.get_or_create(item=item, user=request.user, ordered=False)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -42,10 +54,11 @@ def add_to_cart(request, pk):
         order = Order.objects.create(user=request.user, ordered_date=order_date)
         order.items.add(item)
         messages.info(request, 'Item added to cart.')
-    return redirect('product-page', pk=pk)
+    return redirect(redirect_url, pk=pk)
 
 
 def remove_from_cart(request, pk):
+    redirect_url = request.GET.get('redirect_url', 'product-page')
     item = get_object_or_404(Item, pk=pk)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
@@ -59,4 +72,4 @@ def remove_from_cart(request, pk):
             messages.info(request, 'Item was not in the cart.')
     else:
         messages.info(request, 'You do not have an active order.')
-    return redirect('product-page', pk=pk)
+    return redirect(redirect_url, pk=pk)
