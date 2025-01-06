@@ -11,6 +11,11 @@ CATEGORY_CHOICES = (
     ('GPU', 'GPU'),
     ('RAM', 'RAM'),
     ('MB', 'Motherboard'),
+    ('SSD', 'Solid State Drive'),
+    ('HDD', 'Hard Disk Drive'),
+    ('PSU', 'Power Supply Unit'),
+    ('CPU-COOLER', 'Cpu Cooler'),
+    ('CASE', 'Case'),
 )
 
 LABEL_CHOICES = (
