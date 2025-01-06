@@ -47,6 +47,7 @@ THIRD_PARTY_APPS = (
 
 PROJECT_APPS = (
     "pcparts_store.main",
+    "pcparts_store.accounts",
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -109,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'accounts.StoreUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
