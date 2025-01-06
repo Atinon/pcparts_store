@@ -32,7 +32,14 @@
                 <td colspan="4"><b>Order Total</b></td>
                 <td><b>${{ order.get_total_price }}</b></td>
             </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td>
+                    <a href="{% url 'checkout-page' %}" class="btn btn-outline-dark">Checkout</a>
+                </td>
+            </tr>
             </tbody>
         </table>
+
     </div>
 {% endblock %}
