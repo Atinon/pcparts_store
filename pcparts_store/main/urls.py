@@ -1,7 +1,7 @@
 from django.urls import path
 
 from pcparts_store.main.views import ItemListView, CheckoutView, ItemDetailsView, add_to_cart, remove_from_cart, \
-    CartView
+    CartView, PaymentView
 
 urlpatterns = [
     path('', ItemListView.as_view(), name='home-page'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('add-to-cart/<int:pk>', add_to_cart, name='add-to-cart-page'),
     path('remove-from-cart/<int:pk>', remove_from_cart, name='remove-from-cart-page'),
     path('cart/', CartView.as_view(), name='cart-page'),
+    path('payment/<payment_option>', PaymentView.as_view(), name='payment-page'),
 ]
