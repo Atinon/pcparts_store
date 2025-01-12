@@ -57,8 +57,10 @@
                         <div class="item-box border rounded p-3 d-flex flex-column align-items-center justify-content-between"
                              style="width: 250px; height: 350px;">
                             <!-- Item Image -->
-                            <a class="image-container mb-3" style="height: 150px; width: 100%; overflow: hidden;"
-                               href="{% url 'product-page' pk=item.pk %}">
+                            <div class="bg-image mb-3 hover-zoom ripple ripple-surface ripple-surface-light"
+                                 data-mdb-ripple-color="light"
+                                 style="height: 150px; width: 100%; overflow: hidden;"
+                                 href="{% url 'product-page' pk=item.pk %}">
                                 {% if item.image %}
                                     <img src="{{ item.image.url }}" alt="no-image-available" class="img-fluid"
                                          style="max-height: 100%; max-width: 100%; object-fit: cover;"/>
@@ -67,7 +69,21 @@
                                          class="img-fluid"
                                          style="max-height: 100%; max-width: 100%; object-fit: cover;"/>
                                 {% endif %}
-                            </a>
+                                <a href="{% url 'product-page' pk=item.pk %}">
+                                    <div class="mask">
+                                        <div class="d-flex justify-content-start align-items-end h-100">
+                                            <h5><span
+                                                    class="badge bg-{{ item.get_label_display }} ms-2 p-1"
+                                                    style="font-size: 0.7rem">{{ item.get_label_text }}</span>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="hover-overlay">
+                                        <div class="mask"
+                                             style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                    </div>
+                                </a>
+                            </div>
 
                             <!-- Item Title -->
                             <a href="{% url 'product-page' pk=item.pk %}" class="text-reset text-decoration-none">
