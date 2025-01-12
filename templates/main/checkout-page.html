@@ -35,18 +35,18 @@
                             <!--Grid row-->
                             <div class="row">
                                 <!--Grid column-->
-                                <div class="col-lg-4 col-md-12 mb-4">
+                                <div class="col-lg-4 col-md-12 ">
                                     <p class="mb-0">
                                         Country
                                     </p>
-                                    <div class="form-outline mb-4">
+                                    <div class="form-outline">
                                         {{ form.country }}
                                     </div>
                                 </div>
                                 <!--Grid column-->
 
                                 <!--Grid column-->
-                                <div class="col-lg-4 col-md-12 mb-4">
+                                <div class="col-lg-4 col-md-12 ">
                                     <p class="mb-0">
                                         Zip
                                     </p>
@@ -58,24 +58,25 @@
                             </div>
                             <!--Grid row-->
 
-                            <hr/>
-                            <div class="form-check">
-                                {{ form.same_billing_address }}
-                                <label class="form-check-label" for="flexCheckDefault">Shipping address is the same as
-                                    my
-                                    billing address</label>
-                            </div>
-
-                            <div class="form-check">
-                                {{ form.save_info }}
-                                <label class="form-check-label" for="flexCheckDefault">Save this information for next
-                                    time</label>
-                            </div>
-
-                            <hr/>
+{#                            <hr/>#}
+{#                            <div class="form-check">#}
+{#                                {{ form.same_billing_address }}#}
+{#                                <label class="form-check-label" for="flexCheckDefault">Shipping address is the same as#}
+{#                                    my#}
+{#                                    billing address</label>#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-check">#}
+{#                                {{ form.save_info }}#}
+{#                                <label class="form-check-label" for="flexCheckDefault">Save this information for next#}
+{#                                    time</label>#}
+{#                            </div>#}
+{##}
+{#                            <hr/>#}
 
                             <div class="my-3">
-                                <div class="form-check">
+                                <p class="mb-0">Payment Options</p>
+                                <div class="form-check px-0">
                                     {{ form.payment_options }}
                                 </div>
                             </div>
