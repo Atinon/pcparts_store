@@ -2,55 +2,78 @@
 {% load static %}
 {% block content %}
 
-
     <!--Main layout-->
     <main class="mt-5 pt-4">
-        <div class="container-fluid mt-5 px-5">
+        <div class="container-fluid px-3 px-md-5">
             <!--Grid row-->
-            <div class="row">
-                <!--Grid column-->
-                <div class="col-md-6 mb-4">
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" class="img-fluid" alt=""/>
-                    {% else %}
-                        <img src="{% static 'img/default-item-image.jpg' %}" class="img-fluid" alt=""/>
-                    {% endif %}
+            <div class="row align-items-center">
+                <!--Grid column: Product Image-->
+                <div class="col-md-6 mb-4 text-center">
+                    <div class="image-container"
+                         style="width: 100%; max-width: 400px; aspect-ratio: 1 / 1; overflow: hidden; margin: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}"
+                                 alt="{{ item.title }}"
+                                 class="img-fluid h-100 w-100"
+                                 style="object-fit: contain; border-radius: 8px;">
+                        {% else %}
+                            <img src="{% static 'img/default-item-image.jpg' %}"
+                                 alt="No image available"
+                                 class="img-fluid h-100 w-100"
+                                 style="object-fit: contain; border-radius: 8px;">
+                        {% endif %}
+                    </div>
                 </div>
                 <!--Grid column-->
 
-                <!--Grid column-->
+                <!--Grid column: Product Details-->
                 <div class="col-md-6 mb-4">
                     <!--Content-->
-                    <div class="p-4">
+                    <div class="p-3 p-md-4">
+                        <!--Category and Label Badges-->
                         <div class="mb-3">
-                            <a href="">
+                            <a href="#">
                                 <span class="badge bg-dark me-1">{{ item.category }}</span>
                             </a>
-                            <a href="">
-                                <span class="badge bg-{{ item.get_label_display }} me-1">{{ item.get_label_text }}</span>
-                            </a>
+                            {% if item.get_label_display %}
+                                <a href="#">
+                                    <span class="badge bg-{{ item.get_label_display }} me-1">{{ item.get_label_text }}</span>
+                                </a>
+                            {% endif %}
                         </div>
 
-                        <p class="lead">
-                            <span>${{ item.price }}</span>
+                        <!--Title and Price-->
+                        <h2 class="mb-3 fw-bold text-center text-md-start">{{ item.title }}</h2>
+                        <p class="lead fs-4 text-center text-md-start">
+                            <strong>${{ item.price }}</strong>
                         </p>
 
-                        <strong><p style="font-size: 20px;">Description</p></strong>
-                        {% if item.description %}
-                            <p>{{ item.description | linebreaks }}</p>
-                        {% else %}
-                            <p>This item has no description available.</p>
-                        {% endif %}
+                        <!--Description-->
+                        <div class="mb-4">
+                            <h5 class="fw-bold">Description</h5>
+                            {% if item.description %}
+                                <p>{{ item.description | linebreaks }}</p>
+                            {% else %}
+                                <p class="text-muted">This item has no description available.</p>
+                            {% endif %}
+                        </div>
+
+                        <!--Cart Actions-->
                         {% if request.user.is_authenticated %}
-                            <a href="{% url 'add-to-cart-page' pk=item.pk %}" class="btn btn-primary ms-1">
-                                Add to cart
-                                <i class="fas fa-shopping-cart ms-1"></i>
-                            </a>
-                            <a href="{% url 'remove-from-cart-page' pk=item.pk %}" class="btn btn-danger ms-1">
-                                Remove from cart
-                            </a>
+                            <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+                                <a href="{% url 'add-to-cart-page' pk=item.pk %}" class="btn btn-primary">
+                                    Add to Cart
+                                    <i class="fas fa-shopping-cart ms-2"></i>
+                                </a>
+                                <a href="{% url 'remove-from-cart-page' pk=item.pk %}" class="btn btn-danger">
+                                    Remove from Cart
+                                </a>
+                            </div>
                         {% else %}
-                            <b>Please login to add this item to your cart.</b>
+                            <div class="alert alert-warning mt-4 text-center text-md-start">
+                                Please <a href="{% url 'login' %}" class="alert-link">login</a> to add this item to your
+                                cart.
+                            </div>
                         {% endif %}
                     </div>
                     <!--Content-->
@@ -58,8 +81,11 @@
                 <!--Grid column-->
             </div>
             <!--Grid row-->
-            <hr/>
+
+            <!--Divider-->
+            <hr class="my-5"/>
         </div>
     </main>
     <!--Main layout-->
+
 {% endblock %}
